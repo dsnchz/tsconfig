@@ -1,92 +1,79 @@
-<p>
-  <img width="100%" src="https://assets.solidjs.com/banner?type=Ecosystem&background=tiles&project=library-name" alt="solid-create-script">
-</p>
+# @dschz/tsconfig
 
-# Template: SolidJS Library
+Shared TypeScript configurations for `@dschz` packages. Strict by default, layered by environment.
 
-Template for [SolidJS](https://www.solidjs.com/) library package. Bundling of the library is managed by [tsup](https://tsup.egoist.dev/).
-
-Other things configured include:
-
-- Bun (for dependency management and running scripts)
-- TypeScript
-- ESLint / Prettier
-- Solid Testing Library + Vitest (for testing)
-- Playground app using library
-- Simple Bun server scaffolding for playground app
-- Support for publishing to NPM and JSR
-- GitHub Actions (for all CI/CD)
-
-## Getting Started
-
-Some pre-requisites before install dependencies:
-
-- Install Node Version Manager (NVM)
-  ```bash
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-  ```
-- Install Bun
-  ```bash
-  curl -fsSL https://bun.sh/install | bash
-  ```
-
-### Installing Dependencies
+## Install
 
 ```bash
-nvm use
-bun install
+bun add -D @dschz/tsconfig
 ```
 
-### Local Development Build
+## Configs
 
-```bash
-bun start
-bun start:server # entirely optional to use
+| Config | Use case |
+|--------|----------|
+| `@dschz/tsconfig/base` | Strict base — no JSX, no DOM |
+| `@dschz/tsconfig/lib` | Library packages (ESNext, declarations) |
+| `@dschz/tsconfig/app` | Applications (ESNext + DOM) |
+| `@dschz/tsconfig/lib/solid` | SolidJS library |
+| `@dschz/tsconfig/lib/react` | React library |
+| `@dschz/tsconfig/app/solid` | SolidJS application |
+| `@dschz/tsconfig/app/react` | React application |
+
+## Usage
+
+```json
+// SolidJS library
+{
+  "extends": "@dschz/tsconfig/lib/solid",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@scope/*": ["./packages/*/src"] }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}
 ```
 
-### Linting & Formatting
-
-```bash
-bun run lint    # checks source for lint violations
-bun run format  # checks source for format violations
-
-bun run lint:fix    # fixes lint violations
-bun run format:fix  # fixes format violations
+```json
+// SolidJS app
+{
+  "extends": "@dschz/tsconfig/app/solid",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["vite/client"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
+}
 ```
 
-### Building the Library
-
-This template uses [tsup-preset-solid](https://github.com/solidjs-community/tsup-preset-solid) to build and bundle the library
-
-```bash
-bun run build
+```json
+// Vanilla TypeScript library (no framework)
+{
+  "extends": "@dschz/tsconfig/lib",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
 ```
 
-### Publishing the Library
+## What's included in `base`
 
-This template also comes with Changeset pre-configured and three utility scripts. You must have Changeset installed to leverage them.
+All settings from `@tsconfig/strictest` plus:
 
-```bash
-bun pkg:changeset # run Changeset CLI
-bun pkg:version   # consume any changeset to produce package manifest updates
-bun pkg:publish   # git tag and publish the package to NPM via Changeset
-```
+- `moduleResolution: Bundler`
+- `moduleDetection: force`
+- `verbatimModuleSyntax: true`
+- `isolatedModules: true`
+- `exactOptionalPropertyTypes: true`
+- `noPropertyAccessFromIndexSignature: true`
+- `noImplicitReturns: true`
 
-Another thing to note is the template includes a `jsr.json` config to support publishing to JSR alongside NPM if interested. To publish to JSR, you can run:
+## Notes
 
-```bash
-bunx jsr publish            # publishes to JSR
-bunx jsr publish --dry-run  # checks if library is publishable
-```
-
-> Note: For JSR publishing, Changeset does not update the jsr.json file after running `bun pkg:publish` so you have to manually update the version by hand after changeset has run.
-
-### Contributing
-
-The only requirements when contributing are:
-
-- You keep a clean git history in your branch
-  - rebasing `main` instead of making merge commits.
-- Using proper commit message formats that adhere to [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
-  - Additionally, squashing (via rebase) commits that are not [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- CI checks pass before merging into `main`
+- `paths`, `baseUrl`, `outDir`, and `types` are intentionally omitted — set these per-project
+- `lib/` configs omit DOM — add it explicitly if your library targets the browser
+- `app/` configs set `noEmit: true` — bundler (Vite/tsup) handles output
