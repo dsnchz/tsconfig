@@ -14,20 +14,14 @@
   },
   "files": [
     "base.json",
-    "lib.json",
-    "app.json",
-    "lib",
-    "app"
+    "solid.json",
+    "react.json"
   ],
   "type": "module",
   "exports": {
     "./base": "./base.json",
-    "./lib": "./lib.json",
-    "./app": "./app.json",
-    "./lib/solid": "./lib/solid.json",
-    "./lib/react": "./lib/react.json",
-    "./app/solid": "./app/solid.json",
-    "./app/react": "./app/react.json"
+    "./solid": "./solid.json",
+    "./react": "./react.json"
   },
   "publishConfig": {
     "access": "public"

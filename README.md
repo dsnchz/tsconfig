@@ -12,20 +12,16 @@ bun add -D @dschz/tsconfig
 
 | Config | Use case |
 |--------|----------|
-| `@dschz/tsconfig/base` | Strict base — no JSX, no DOM |
-| `@dschz/tsconfig/lib` | Library packages (ESNext, declarations) |
-| `@dschz/tsconfig/app` | Applications (ESNext + DOM) |
-| `@dschz/tsconfig/lib/solid` | SolidJS library |
-| `@dschz/tsconfig/lib/react` | React library |
-| `@dschz/tsconfig/app/solid` | SolidJS application |
-| `@dschz/tsconfig/app/react` | React application |
+| `@dschz/tsconfig/base` | Environment-agnostic libraries (no DOM) |
+| `@dschz/tsconfig/solid` | SolidJS libraries and applications |
+| `@dschz/tsconfig/react` | React libraries and applications |
 
 ## Usage
 
 ```json
-// SolidJS library
+// SolidJS library or app
 {
-  "extends": "@dschz/tsconfig/lib/solid",
+  "extends": "@dschz/tsconfig/solid",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "@scope/*": ["./packages/*/src"] }
@@ -36,22 +32,21 @@ bun add -D @dschz/tsconfig
 ```
 
 ```json
-// SolidJS app
+// React library or app
 {
-  "extends": "@dschz/tsconfig/app/solid",
+  "extends": "@dschz/tsconfig/react",
   "compilerOptions": {
-    "baseUrl": ".",
-    "types": ["vite/client"]
+    "baseUrl": "."
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "coverage"]
 }
 ```
 
 ```json
-// Vanilla TypeScript library (no framework)
+// Vanilla TypeScript library (no DOM, no JSX)
 {
-  "extends": "@dschz/tsconfig/lib",
+  "extends": "@dschz/tsconfig/base",
   "compilerOptions": {
     "baseUrl": "."
   },
@@ -62,18 +57,14 @@ bun add -D @dschz/tsconfig
 
 ## What's included in `base`
 
-All settings from `@tsconfig/strictest` plus:
-
 - `moduleResolution: Bundler`
 - `moduleDetection: force`
 - `verbatimModuleSyntax: true`
 - `isolatedModules: true`
-- `exactOptionalPropertyTypes: true`
-- `noPropertyAccessFromIndexSignature: true`
-- `noImplicitReturns: true`
+- `lib: ["ESNext"]` — no DOM
+- Full strict suite: `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`, `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`, and more
 
 ## Notes
 
-- `paths`, `baseUrl`, `outDir`, and `types` are intentionally omitted — set these per-project
-- `lib/` configs omit DOM — add it explicitly if your library targets the browser
-- `app/` configs set `noEmit: true` — bundler (Vite/tsup) handles output
+- `paths`, `baseUrl`, `outDir`, `noEmit`, `declaration`, and `types` are intentionally omitted — set these per-project
+- `solid` and `react` configs add `lib: ["ESNext", "DOM", "DOM.Iterable"]` on top of base
