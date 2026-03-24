@@ -63,6 +63,7 @@ bun add -D @dschz/tsconfig
 - `isolatedModules: true`
 - `lib: ["ESNext"]` — no DOM
 - Full strict suite: `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`, `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`, and more
+- `erasableSyntaxOnly: true` — disallows enums, namespaces, and parameter properties (enforces TypeScript as pure type erasure)
 
 ## Notes
 
