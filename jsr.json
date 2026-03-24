@@ -1,0 +1,13 @@
+{
+  "name": "@dschz/tsconfig",
+  "version": "0.0.0",
+  "license": "MIT",
+  "exports": {
+    "./base": "./base.json",
+    "./solid": "./solid.json",
+    "./react": "./react.json"
+  },
+  "publish": {
+    "include": ["LICENSE", "README.md", "CHANGELOG.md", "base.json", "solid.json", "react.json"]
+  }
+}

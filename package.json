@@ -31,7 +31,7 @@
     "format:fix": "oxfmt",
     "pkg:changeset": "changeset",
     "pkg:version": "changeset version",
-    "pkg:publish": "changeset publish"
+    "pkg:publish": "changeset publish && jsr publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
