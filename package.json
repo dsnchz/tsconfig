@@ -29,8 +29,9 @@
   "scripts": {
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
+    "jsr:version": "bun -e \"import {readFileSync,writeFileSync} from 'fs'; const jsr=JSON.parse(readFileSync('jsr.json','utf8')); jsr.version=JSON.parse(readFileSync('package.json','utf8')).version; writeFileSync('jsr.json',JSON.stringify(jsr,null,2)+'\\n');\"",
     "pkg:changeset": "changeset",
-    "pkg:version": "changeset version && bun -e \"import {readFileSync,writeFileSync} from 'fs'; const jsr=JSON.parse(readFileSync('jsr.json','utf8')); jsr.version=JSON.parse(readFileSync('package.json','utf8')).version; writeFileSync('jsr.json',JSON.stringify(jsr,null,2)+'\\n');\"",
+    "pkg:version": "changeset version && bun run jsr:version",
     "pkg:publish": "changeset publish && jsr publish"
   },
   "devDependencies": {
