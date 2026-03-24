@@ -26,7 +26,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "bun@1.2.15",
   "scripts": {
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
@@ -38,5 +37,6 @@
     "@changesets/cli": "^2.30.0",
     "oxfmt": "^0.41.0",
     "typescript": "^6.0.2"
-  }
+  },
+  "packageManager": "bun@1.2.15"
 }

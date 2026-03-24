@@ -10,11 +10,11 @@ bun add -D @dschz/tsconfig
 
 ## Configs
 
-| Config | Use case |
-|--------|----------|
-| `@dschz/tsconfig/base` | Environment-agnostic libraries (no DOM) |
-| `@dschz/tsconfig/solid` | SolidJS libraries and applications |
-| `@dschz/tsconfig/react` | React libraries and applications |
+| Config                  | Use case                                |
+| ----------------------- | --------------------------------------- |
+| `@dschz/tsconfig/base`  | Environment-agnostic libraries (no DOM) |
+| `@dschz/tsconfig/solid` | SolidJS libraries and applications      |
+| `@dschz/tsconfig/react` | React libraries and applications        |
 
 ## Usage
 
