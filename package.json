@@ -31,6 +31,7 @@
     "format:fix": "oxfmt",
     "pkg:changeset": "changeset",
     "pkg:version": "changeset version",
+    "postpkg:version": "bun -e \"import {readFileSync,writeFileSync} from 'fs'; const jsr=JSON.parse(readFileSync('jsr.json','utf8')); jsr.version=JSON.parse(readFileSync('package.json','utf8')).version; writeFileSync('jsr.json',JSON.stringify(jsr,null,2)+'\\n');\"",
     "pkg:publish": "changeset publish && jsr publish"
   },
   "devDependencies": {
